@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.usuario.aplicacionmaps.logic.Estacion;
 import com.example.usuario.aplicacionmaps.logic.EstacionInformacion;
 import com.example.usuario.aplicacionmaps.logic.Servicio;
 import com.example.usuario.aplicacionmaps.persistencia.ServicioInfoEstacion;
@@ -80,6 +79,11 @@ public class ServiciosEstacion extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "ERROR EN LA CAPTURA DE DATOS" ,Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     public void getServiciosEstacion(){

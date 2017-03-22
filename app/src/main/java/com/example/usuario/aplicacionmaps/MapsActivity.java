@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,14 +21,10 @@ import android.widget.Toast;
 
 import com.example.usuario.aplicacionmaps.logic.Estacion;
 import com.example.usuario.aplicacionmaps.persistencia.ServicioEstacion;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -204,10 +198,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return datos;
     }
 
-    public void setDatos(List<Estacion> datos) {
-        this.datos = datos;
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         this.setMiUbicacion(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -233,7 +223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void setMiUbicacion(LatLng miUbicacion) {
-        aux++;
+        aux += aux + 1;
         if (aux==1)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 13));
         this.miUbicacion = miUbicacion;
@@ -241,9 +231,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean isOnline(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
-            return  true;
-        }
-        return  false;
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
