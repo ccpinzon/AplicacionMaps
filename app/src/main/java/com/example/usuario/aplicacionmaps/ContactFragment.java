@@ -1,6 +1,10 @@
 package com.example.usuario.aplicacionmaps;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -31,7 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment implements LocationListener {
 
     MapView mapView;
     GoogleMap gooMap;
@@ -69,7 +73,7 @@ public class ContactFragment extends Fragment {
                     LatLng ub = new LatLng(5.547931, -73.350728);
                     // Updates the location and zoom of the MapView
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(ub, 12);
-                    gooMap.moveCamera(cameraUpdate);
+                    //gooMap.moveCamera(cameraUpdate);
                     informacionWindow();
                 }
             });
@@ -149,6 +153,17 @@ public class ContactFragment extends Fragment {
         });
     }
 
+    public LatLng getMiUbicacion() {
+        return miUbicacion;
+    }
+
+    public void setMiUbicacion(LatLng miUbicacion) {
+        aux += aux + 1;
+        if (aux==1)
+            gooMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 13));
+        this.miUbicacion = miUbicacion;
+    }
+
     @Override
     public void onResume() {
         mapView.onResume();
@@ -168,5 +183,25 @@ public class ContactFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        this.setMiUbicacion(new LatLng(location.getLatitude(), location.getLongitude()));
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
